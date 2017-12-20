@@ -31,7 +31,7 @@ public interface InformationEstimatorInterface{
 
 public class TestCase {
     public static void main(String[] args) {
-	/*try {
+	try {
 	    FrequencerInterface  myObject;
 	    int freq;
 	    System.out.println("checking s4.b173371.Frequencer");
@@ -68,7 +68,8 @@ public class TestCase {
 	catch(Exception e) {
 	    System.out.println("Exception occurred: STOP");
 	}
-        
+    //ここから自分でつくったテストケース
+    //Target's length is zero -- return -1   修正--完了
     try{
         FrequencerInterface myObject;
         int freq;
@@ -79,12 +80,13 @@ public class TestCase {
         myObject.setTarget("".getBytes());
         freq = myObject.frequency();
         System.out.print("\"\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
-        if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
         
     }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
     }
+    //Target is not set -- return -1　　　　修正--完了
     try{
         FrequencerInterface myObject;
         int freq;
@@ -93,15 +95,17 @@ public class TestCase {
         myObject = new s4.b173371.Frequencer();
         myObject.setSpace("Hi Ho Hi Ho".getBytes());
         
+
         freq = myObject.frequency();
+        
         System.out.print("\"\" in \"Hi Ho Hi Ho\" appears "+freq+" times. ");
-        if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        if(-1 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
             
     }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
     }
-
+    //Space's length is zero -- return 0
     try{
         FrequencerInterface myObject;
         int freq;
@@ -112,12 +116,13 @@ public class TestCase {
         myObject.setTarget("H".getBytes());
         freq = myObject.frequency();
         System.out.print("\"H\" in \"\" appears "+freq+" times. ");
-        if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
             
         }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
     }
+    //Space is not set -- retutn 0　　修正--完了
     try{
         FrequencerInterface myObject;
         int freq;
@@ -128,17 +133,18 @@ public class TestCase {
         myObject.setTarget("H".getBytes());
         freq = myObject.frequency();
         System.out.print("\"H\" in \"\" appears "+freq+" times. ");
-        if(4 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
+        if(0 == freq) { System.out.println("OK"); } else {System.out.println("WRONG"); }
             
     }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
     }
+    //frequency is zero -- OK
     try{
         FrequencerInterface myObject;
         int freq;
         System.out.println("frequency is zero");
-        System.out.println("checking s4.b173371.Frequencer -> checking[retunr 0]");
+        System.out.println("checking s4.b173371.Frequencer -> checking[retunr 0 OK]");
         myObject = new s4.b173371.Frequencer();
         myObject.setSpace("Hi Ho Hi Ho".getBytes());
         myObject.setTarget("K".getBytes());
@@ -149,12 +155,13 @@ public class TestCase {
     }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
-    }*/
+    }
+    //途中まで同じ文字列が２つ以上出現し、Targetの長さがSpaceの半分以上だった場合 -- 1　　　修正--完了
     try{
         FrequencerInterface myObject;
         int freq;
         System.out.println("途中まで同じ文字列が２つ以上でた場合");
-        System.out.println("checking s4.b173371.Frequencer -> checking[retunr 0]");
+        System.out.println("checking s4.b173371.Frequencer -> checking[retunr 1]");
         myObject = new s4.b173371.Frequencer();
         myObject.setSpace("Hi Ho Hi Ho".getBytes());
         myObject.setTarget("Hi Ho ".getBytes());
@@ -167,7 +174,7 @@ public class TestCase {
         System.out.println("Exception occurred: STOP");
     }
 
-       /*
+    //Target's length is zero -- return 0.0　　修正--完了
     try {
         InformationEstimatorInterface myObject;
         double value;
@@ -182,6 +189,7 @@ public class TestCase {
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
     }
+    //Target is not set -- return 0.0　　　修正--完了
     try {
         InformationEstimatorInterface myObject;
         double value;
@@ -196,7 +204,7 @@ public class TestCase {
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
     }
-        
+    //Space is not set -- return Double.MAX_VALUE　修正--完了
     try {
         InformationEstimatorInterface myObject;
         double value;
@@ -210,8 +218,25 @@ public class TestCase {
     }
     catch(Exception e) {
         System.out.println("Exception occurred: STOP");
-    }*/
+    }
+        
+    //True value is infinite -- return Double.MAX_VALUE
+    try {
+        InformationEstimatorInterface myObject;
+        double value;
+        System.out.println("checking s4.b173371.InformationEstimator True value is infinite");
+        myObject = new s4.b173371.InformationEstimator();
+        myObject.setSpace("".getBytes());
+        myObject.setTarget("0".getBytes());
+        value = myObject.estimation();
+        System.out.println(">0 "+value);
+        
+    }
+    catch(Exception e) {
+        System.out.println("Exception occurred: STOP");
+    }
 
+        
     }
 }	    
 	    

@@ -17,21 +17,46 @@ interface FrequencerInterface {     // This interface provides the design for fr
 
 public class Frequencer implements FrequencerInterface{
     // Code to Test, *warning: This code  contains intentional problem*
-    byte [] myTarget;
+    byte [] myTarget = null;
     byte [] mySpace;
     public void setTarget(byte [] target) { myTarget = target;}
     public void setSpace(byte []space) { mySpace = space; }
     public int frequency() {
-	int targetLength = myTarget.length;
-	int spaceLength = mySpace.length;
-	int count = 0;
-	for(int start = 0; start<spaceLength; start++) { // Is it OK?
-	    boolean abort = false;
-	    for(int i = 0; i<targetLength; i++) {
-            if(myTarget[i] != mySpace[start+i]) { abort = true; break; }
-	    }
-	    if(abort == false) { count++; }
-	}
+        int targetLength;
+        int spaceLength;
+    if(myTarget == null){
+        targetLength = 0;
+    }
+    else if(myTarget.length > 0){
+        targetLength = myTarget.length;
+    }else{
+        targetLength = 0;
+    }
+    if(mySpace == null){
+        spaceLength = 0;
+    }else if(mySpace.length > 0){
+        spaceLength = mySpace.length;
+    }else{
+        spaceLength = 0;
+    }
+    int count = 0;
+    if(targetLength != 0 && spaceLength != 0){
+        for(int start = 0; start<spaceLength; start++) { // Is it OK?
+            boolean abort = false;
+            for(int i = 0; i<targetLength; i++) {
+                if((start+i) >= (spaceLength - 1)){
+                    abort = true;
+                    break;
+                }else if(myTarget[i] != mySpace[start+i]) { abort = true; break; }
+            }
+            if(abort == false) { count++; }
+        }
+    }else if(targetLength == 0){
+        return -1;
+    }else if(spaceLength == 0){
+        return 0;
+    }
+    
 	return count;
     }
 
