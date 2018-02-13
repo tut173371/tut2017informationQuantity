@@ -129,7 +129,7 @@ public class Frequencer implements FrequencerInterface{
          9:o
          A:o Hi Ho
          */
-        printSuffixArray();
+        //printSuffixArray();
     }
     
     
@@ -186,16 +186,15 @@ public class Frequencer implements FrequencerInterface{
         
         while(left<=right){
             middle = (left + right) / 2;
-            System.out.println(middle);
+            
             if(targetCompare(middle,start,end)==0){
                 
                 return middle;
             }else if(targetCompare(middle,start,end)>0){
-               System.out.println("左棄却");
+               
                
                 left = middle + 1;
             }else if(targetCompare(middle,start,end)<0){
-                System.out.println("右棄却");
                 right = middle - 1;
             }
         }
@@ -286,7 +285,6 @@ public class Frequencer implements FrequencerInterface{
         if(first == last1){
             return 0;
         }else{
-            System.out.println("first = "+first+" last1 = "+last1);
             return last1 - first;
         }
         
