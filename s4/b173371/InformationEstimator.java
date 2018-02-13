@@ -77,7 +77,10 @@ public class InformationEstimator implements InformationEstimatorInterface{
                     end++;
                 }
                 // System.out.print("("+start+","+end+")");
+                //targetを文字列として保存
                 String sub_bytes = new String(subBytes(myTarget, start, end));
+                //保存した文字列とsuffixの値をmapによって保存
+                //もしすでに保存してある文字列のfrequencerを実行しようとするとmapから引っ張ってくる
                 if(value_map.containsKey(sub_bytes) == false){
                     myFrequencer.setTarget(subBytes(myTarget, start, end));
                     value_map.put(sub_bytes,iq(myFrequencer.frequency()));

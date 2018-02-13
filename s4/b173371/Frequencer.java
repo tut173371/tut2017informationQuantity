@@ -22,6 +22,7 @@ public class Frequencer implements FrequencerInterface{
                 System.out.write('\n'); }
         }
     }
+    //文字列比較
     private int suffixCompare(int i, int j) {
         // comparing two suffixes by dictionary order.
         // i and j denoetes suffix_i, and suffix_j
@@ -55,7 +56,7 @@ public class Frequencer implements FrequencerInterface{
         return 0;
     }
     
-    
+    //クイックソート関数
     public void QuickSort(int[] suffixArray, int left, int right){
         int curleft = left;
         int curright = right;
@@ -72,9 +73,11 @@ public class Frequencer implements FrequencerInterface{
             }
             if(curleft <= curright){
                 if(curright == pivot){
+                    //ピボットとcurrightが同じ場所を指した時にピボットも動かす
                     pivot = curleft;
                     swap(suffixArray,curleft++,curright--);
                 }else if(curleft == pivot){
+                    //ピボットとcurleftが同じ場所を指した時にピボットも動かす
                     pivot = curright;
                     swap(suffixArray,curleft++,curright--);
                 }else{
@@ -84,14 +87,15 @@ public class Frequencer implements FrequencerInterface{
 
             
         }while(curleft<=curright);
-                if(left < curright){
+        //pivotを基準とした左側と右側それぞれで再帰的にクイックソート関数を呼び出す
+        if(left < curright){
             QuickSort(suffixArray, left, curright);
         }
         if(curleft < right){
             QuickSort(suffixArray, curleft, right);
         }
     }
-    
+    //選択された二つのデータを入れ替える関数
     public void swap(int[] suffixArray, int i, int j){
         
         int value = suffixArray[i];
@@ -132,7 +136,7 @@ public class Frequencer implements FrequencerInterface{
         //printSuffixArray();
     }
     
-    
+    //Targetとして与えられた文字列とsuffixArrayで分けられた部分文字列の比較
     private int targetCompare(int i, int start, int end) {
         // It is called from subBytesStarIndex, adn subBytesEndIndex.
         // "start" and "end" are same as in subByteStartIndex, and subByteEndIndex ** // target_start_end is subBytes(start, end) of target **
@@ -156,28 +160,28 @@ public class Frequencer implements FrequencerInterface{
         // "Ho" = "H"
         
         
-        int si = mySpace.length-suffixArray[i];
-        int sj = end;
+        int si = mySpace.length-suffixArray[i]; //suffixArrayの部分文字列の長さ
+        int sj = end;                           //targetの長さ
         int s=0;
         if(si>sj)s=sj;
         else s=si;
-        
+        //部分文字列とtargetを1文字ずつ比較
         for(int  k=0;k<s;k++){
             
             if(mySpace[suffixArray[i]+k]>myTarget[k]) return -1;
             if(mySpace[suffixArray[i]+k]<myTarget[k]) return 1;
         }
         if((si>sj) || (si==sj)){
-            return 0;//targetのほうがみじかいとして
+            return 0;//targetのほうが短い場合辞書的に小さい
         }
         else if(si<sj)
-            return 1;
+            return 1;//targetのほうが長い場合辞書的に大きい
         
         
         return 0;
         
     }
-    
+    //binary search関数 二分探索法関数
     private int binarySearch(int start, int end){
         
         int left = 0;
@@ -188,18 +192,19 @@ public class Frequencer implements FrequencerInterface{
             middle = (left + right) / 2;
             
             if(targetCompare(middle,start,end)==0){
-                
+                //targetとmiddleが等しい→見つけたことと同義
                 return middle;
             }else if(targetCompare(middle,start,end)>0){
                
-               
+                //targetよりmiddleのほうが大きい時,middle以上のデータを棄却
                 left = middle + 1;
             }else if(targetCompare(middle,start,end)<0){
+                //targeよりmiddleのほうが小さい時,middle以下のデータを棄却
                 right = middle - 1;
             }
         }
         
-        return middle;
+        return suffixArray.length;
         
     }
     
@@ -216,9 +221,14 @@ public class Frequencer implements FrequencerInterface{
         
         
         value = binarySearch(start,end);
+        if(value == suffixArray.length){
+            return suffixArray.length;
+        }
         boolean flag = true;
         while(flag == true){
+            //suffixの引数が0を下回ってはならない
             if((value-1) >0){
+                //見つけたvalueの位置からstartまで遡る
                 if(targetCompare(value-1,start,end)==0){
                     
                     value--;
@@ -232,7 +242,7 @@ public class Frequencer implements FrequencerInterface{
             }
         }
         
-        
+        //見つからなかった場合はsuffixArrayの長さを返す
         return suffixArray.length;
     }
     
@@ -245,9 +255,14 @@ public class Frequencer implements FrequencerInterface{
         
         int value = 0;
         value = binarySearch(start,end);
+        if(value == suffixArray.length){
+            return suffixArray.length;
+        }
         boolean flag = true;
         while(flag == true){
+            //suffixの引数がsuffixArayの長さを超えてはならない
             if((value+1) < suffixArray.length){
+                //見つけた場合valueの位置からendの位置まで登る
                 if(targetCompare(value+1,start,end)==0){
                     value++;
                 }
@@ -259,7 +274,7 @@ public class Frequencer implements FrequencerInterface{
                 return value+1;
             }
         }
-
+        //見つからなかった場合はsuffixArrayの長さを返す
         return suffixArray.length;
     }
     
@@ -278,7 +293,7 @@ public class Frequencer implements FrequencerInterface{
         int first = subByteStartIndex(start,end);
         int last1 = subByteEndIndex(start, end);
         //inspection code
-       /*  for(int k=start;k<end;k++)
+        /*for(int k=start;k<end;k++)
          { System.out.write(myTarget[k]); }
         System.out.printf(": first=%d last1=%d\n", first, last1);
         */
@@ -308,7 +323,7 @@ public class Frequencer implements FrequencerInterface{
             frequencerObject = new Frequencer();
             frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
             
-             frequencerObject.setTarget("o ".getBytes());
+             frequencerObject.setTarget("j".getBytes());
             
              int result = frequencerObject.frequency();
              
