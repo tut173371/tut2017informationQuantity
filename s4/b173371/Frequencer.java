@@ -60,10 +60,13 @@ public class Frequencer implements FrequencerInterface{
         int curleft = left;
         int curright = right;
         int pivot = (curleft + curright) / 2;
+        
         do{
             while(suffixCompare(pivot,curleft)>0){
+                
                 curleft++;
             }
+            
             while(suffixCompare(pivot,curright)<0){
                 curright--;
             }
@@ -81,7 +84,7 @@ public class Frequencer implements FrequencerInterface{
 
             
         }while(curleft<=curright);
-        if(left < curright){
+                if(left < curright){
             QuickSort(suffixArray, left, curright);
         }
         if(curleft < right){
@@ -90,21 +93,26 @@ public class Frequencer implements FrequencerInterface{
     }
     
     public void swap(int[] suffixArray, int i, int j){
+        
         int value = suffixArray[i];
         suffixArray[i] = suffixArray[j];
         suffixArray[j] = value;
+        
       
     }
     
     public void setSpace(byte []space) {
         mySpace = space;
-        if(mySpace.length>0) spaceReady = true;
+        if(mySpace.length>0){spaceReady = true;}
+        else{return;}
+    
         suffixArray = new int[space.length];
         // put all suffixes in suffixArray. Each suffix is expressed by one interger.
         for(int i = 0; i< space.length; i++) {
             suffixArray[i] = i;
         }
-        QuickSort(suffixArray,0,space.length - 1);
+        
+        QuickSort(suffixArray,0,mySpace.length - 1);
         
         
         // Sorting is not implmented yet.
@@ -163,7 +171,7 @@ public class Frequencer implements FrequencerInterface{
             return 0;//targetのほうがみじかいとして
         }
         else if(si<sj)
-            return -1;
+            return 1;
         
         
         return 0;
@@ -178,13 +186,16 @@ public class Frequencer implements FrequencerInterface{
         
         while(left<=right){
             middle = (left + right) / 2;
+            System.out.println(middle);
             if(targetCompare(middle,start,end)==0){
+                
                 return middle;
             }else if(targetCompare(middle,start,end)>0){
-               //System.out.println("左棄却");
+               System.out.println("左棄却");
+               
                 left = middle + 1;
             }else if(targetCompare(middle,start,end)<0){
-                //System.out.println("右棄却");
+                System.out.println("右棄却");
                 right = middle - 1;
             }
         }
@@ -210,6 +221,7 @@ public class Frequencer implements FrequencerInterface{
         while(flag == true){
             if((value-1) >0){
                 if(targetCompare(value-1,start,end)==0){
+                    
                     value--;
                 }
                 else {
@@ -222,7 +234,7 @@ public class Frequencer implements FrequencerInterface{
         }
         
         
-        return value;
+        return suffixArray.length;
     }
     
     
@@ -249,7 +261,7 @@ public class Frequencer implements FrequencerInterface{
             }
         }
 
-        return value+1;
+        return suffixArray.length;
     }
     
     
@@ -271,8 +283,12 @@ public class Frequencer implements FrequencerInterface{
          { System.out.write(myTarget[k]); }
         System.out.printf(": first=%d last1=%d\n", first, last1);
         */
-        return last1 - first;
-        
+        if(first == last1){
+            return 0;
+        }else{
+            System.out.println("first = "+first+" last1 = "+last1);
+            return last1 - first;
+        }
         
     }
     
@@ -294,12 +310,12 @@ public class Frequencer implements FrequencerInterface{
             frequencerObject = new Frequencer();
             frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
             
-             frequencerObject.setTarget("H".getBytes());
+             frequencerObject.setTarget("o ".getBytes());
             
              int result = frequencerObject.frequency();
              
              System.out.print("Freq = "+ result+" ");
-             if(4 == result) { System.out.println("OK"); }
+             if(1 == result) { System.out.println("OK"); }
              else {System.out.println("WRONG"); }
             
         }
