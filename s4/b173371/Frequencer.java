@@ -227,7 +227,7 @@ public class Frequencer implements FrequencerInterface{
         boolean flag = true;
         while(flag == true){
             //suffixの引数が0を下回ってはならない
-            if((value-1) >0){
+            if((value-1) >=0){
                 //見つけたvalueの位置からstartまで遡る
                 if(targetCompare(value-1,start,end)==0){
                     
@@ -323,12 +323,12 @@ public class Frequencer implements FrequencerInterface{
             frequencerObject = new Frequencer();
             frequencerObject.setSpace("Hi Ho Hi Ho".getBytes());
             
-             frequencerObject.setTarget("j".getBytes());
+             frequencerObject.setTarget("Ho".getBytes());
             
              int result = frequencerObject.frequency();
              
              System.out.print("Freq = "+ result+" ");
-             if(1 == result) { System.out.println("OK"); }
+             if(2 == result) { System.out.println("OK"); }
              else {System.out.println("WRONG"); }
             
         }
